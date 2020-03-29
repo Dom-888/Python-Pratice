@@ -1,7 +1,7 @@
   
 import os
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -17,8 +17,11 @@ def about():
         data = json.load(json_data)
     return render_template("about.html", page_title="About", company=data) # {{ company }} will print data (our JSON file) on about.html
 
-@app.route('/contact')
+@app.route('/contact', methods=["GET", "POST"]) # Allow GET an POST methods on this page
 def contact():
+    if request.method == "POST":
+        print("request.form") # Print the inputtted data in the debugger console
+
     return render_template("contact.html", page_title="Contact")
 
 @app.route('/careers')
