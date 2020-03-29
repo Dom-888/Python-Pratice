@@ -1,10 +1,10 @@
   
 import os
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 
 app = Flask(__name__)
-
+app.secret_key = 'abrakadabra'
 
 @app.route('/') # The selected url (the root directory here) wil trigger the function below
 def index():
@@ -20,7 +20,7 @@ def about():
 @app.route('/contact', methods=["GET", "POST"]) # Allow GET an POST methods on this page
 def contact():
     if request.method == "POST":
-        print("request.form") # Print the inputtted data in the debugger console
+        flash("Thanks {}, we have received your message!" .format(request.form["name"]))
 
     return render_template("contact.html", page_title="Contact")
 
